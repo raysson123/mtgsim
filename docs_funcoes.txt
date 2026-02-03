@@ -1,0 +1,55 @@
+=====================================================
+DOCUMENTAÇÃO DE FUNÇÕES - MTG SIMULATOR (MVC)
+=====================================================
+
+1. CAMADA: MODEL (Lógica e Dados)
+-----------------------------------------------------
+Arquivo: src/model/card.py
+- __init__(name, scryfall_id, types, cost): Inicializa os atributos da carta.
+- tap(): Altera o estado da carta para 'tapped'.
+- untap(): Altera o estado da carta para 'untapped'.
+
+Arquivo: src/model/player.py
+- shuffle_deck(): Embaralha a lista de cartas (Grimório).
+- draw_card(num): Move 'num' cartas do Grimório para a Mão.
+- play_card(card_index): Remove carta da mão e envia para o campo (Battlefield).
+- change_life(amount): Soma ou subtrai pontos de vida.
+
+Arquivo: src/model/game_logic.py
+- check_priority(): Verifica qual jogador tem a vez de agir.
+- resolve_stack(): Processa a última magia ou habilidade colocada na pilha.
+- next_phase(): Rotaciona entre as fases (Untap, Upkeep, Draw, Main, etc).
+
+Arquivo: src/model/bot.py
+- auto_play_land(): O Bot verifica se tem terreno na mão e joga se for a fase principal.
+- auto_attack_decide(): Lógica simples para o bot decidir se ataca com base no poder das criaturas.
+
+2. CAMADA: VIEW (Interface e Gráficos)
+-----------------------------------------------------
+Arquivo: src/view/renderer.py
+- draw_battlefield(state): Desenha o fundo, as zonas dos 4 jogadores e a pilha.
+- draw_card_sprite(card, x, y): Renderiza a imagem da carta (aplicando rotação se estiver virada).
+- show_overlay_message(text): Exibe mensagens como "Sua Vez" ou "Fase de Combate".
+
+Arquivo: src/view/assets_mgr.py
+- get_scryfall_data(card_name): Faz o request para a API e filtra nome, ID e URL da imagem.
+- load_image_cache(card_id): Busca a imagem na pasta /assets/cards. Se não existir, faz download.
+- pre_load_deck(deck_list): Recebe a lista do .txt e baixa todas as imagens antes de começar a partida.
+
+3. CAMADA: CONTROLLER (Input e Rede)
+-----------------------------------------------------
+Arquivo: src/controller/input_handler.py
+- detect_click_target(pos): Converte a coordenada (x, y) do mouse em um objeto do Model (Carta, Deck ou Jogador).
+- handle_drag_and_drop(): Gerencia o movimento visual de mover uma carta da mão para a mesa.
+
+Arquivo: src/controller/network_mgr.py
+- send_action(action_type, payload): Codifica e envia uma ação para o servidor (ex: "TAP_CARD").
+- listen_server(): Thread que fica ouvindo atualizações do servidor e atualiza o Model local.
+
+4. NETWORK (Servidor Central)
+-----------------------------------------------------
+Arquivo: src/network/server.py
+- handle_client(conn, addr): Gerencia a conexão individual de cada um dos 4 jogadores.
+- sync_game_state(): Envia o estado atualizado do jogo para todos os clientes conectados na sala.
+- fill_with_bots(room_id): Se a sala não encher, instancia o script bot.py para completar os 4 lugares.
+=====================================================

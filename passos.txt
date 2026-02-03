@@ -1,0 +1,26 @@
+1. Comece pelo "Esqueleto" do Model (Sem interface ainda)
+Antes de desenhar no Pygame ou conectar na internet, você precisa que o Python entenda o que é um jogo de Magic.
+
+Crie a classe Card e GameState.
+
+Crie a função de carregar o deck .txt.
+
+Por que? Porque os dados que você estruturar aqui são exatamente o que você vai precisar "enviar" pela rede depois.
+
+2. Implemente a Conexão Básica (O "Eco")
+Assim que você conseguir carregar um deck, crie um servidor simples que apenas recebe uma mensagem e repassa para os outros.
+
+Teste enviar uma "Carta" de um programa para o outro.
+
+Por que? Isso garante que sua arquitetura suporta o tráfego de dados antes de você gastar horas codificando regras complexas como a "Pilha" (Stack) ou "Camadas" (Layers).
+
+3. O Ciclo de Desenvolvimento Recomendado
+Eu sugiro trabalharmos em Sprints (pequenos ciclos):
+
+Sprint 1 (O Alicerce): Criar o carregador de Decks + Busca no Scryfall. (É gratificante ver a carta na tela!).
+
+Sprint 2 (A Ponte): Criar o servidor básico que aceita 4 conexões e coloca todos em uma "sala".
+
+Sprint 3 (A Ação): Implementar o básico do jogo: comprar carta, baixar terreno e virar (tappar). Sincronizar isso entre os 4 jogadores.
+
+Sprint 4 (A Inteligência): Adicionar o Bot para completar as vagas e as regras automáticas de fases.
